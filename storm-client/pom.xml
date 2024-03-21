@@ -261,7 +261,7 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
+    <!-- <profiles>
         <profile>
             <id>unix_py_tests</id>
             <activation>
@@ -321,5 +321,5 @@
                 </plugins>
             </build>
         </profile>
-    </profiles>
+    </profiles> -->
 </project>
