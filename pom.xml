@@ -506,7 +506,7 @@
                 <module>sql</module>
             </modules>
         </profile>
-        <profile>
+        <!--<profile>
             <id>examples</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -523,7 +523,7 @@
                 <module>examples/storm-jms-examples</module>
                 <module>examples/storm-perf</module>
             </modules>
-        </profile>
+        </profile>-->
     </profiles>
 
     <dependencyManagement>
@@ -876,7 +876,6 @@
                 <version>${thrift.version}</version>
                 <scope>compile</scope>
             </dependency>
-            <!-- used by examples/storm-starter -->
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
