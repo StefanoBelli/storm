@@ -1,3 +1,11 @@
+# Ste CI
+
+Build status below
+
+![steci](https://github.com/StefanoBelli/storm/actions/workflows/ste-ci.yml/badge.svg)
+
+# Apache original README.markdown
+
 Master Branch:  
 [![Java CI with Maven](https://github.com/apache/storm/actions/workflows/maven.yaml/badge.svg)](https://github.com/apache/storm/actions/workflows/maven.yaml)
 [![Maven Version](https://maven-badges.herokuapp.com/maven-central/org.apache.storm/storm-core/badge.svg)](https://search.maven.org/#search|gav|1|g:"org.apache.storm"%20AND%20a:"storm-core")
