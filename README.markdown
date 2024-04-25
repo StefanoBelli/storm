@@ -13,6 +13,7 @@ BaseDir=``./storm-client/src/jvm``
  * ``org.apache.storm.task.ShellBolt``
  * ``org.apache.storm.bolt.JoinBolt``
  * ``org.apache.storm.utils.ObjectReader``
+ * ``org.apache.storm.windowing.WindowManager``
 
 # Apache original README.markdown
 
