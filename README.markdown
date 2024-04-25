@@ -4,6 +4,16 @@ Build status below
 
 ![steci](https://github.com/StefanoBelli/storm/actions/workflows/ste-ci.yml/badge.svg)
 
+## Tested classes
+
+BaseDir=``./storm-client/src/jvm``
+
+ * ``org.apache.storm.utils.BatchHelper``
+ * ``org.apache.storm.blobstore.NimbusBlobStore``
+ * ``org.apache.storm.task.ShellBolt``
+ * ``org.apache.storm.bolt.JoinBolt``
+ * ``org.apache.storm.utils.ObjectReader``
+
 # Apache original README.markdown
 
 Master Branch:  
