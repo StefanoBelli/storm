@@ -184,21 +184,23 @@
         <module>storm-submit-tools</module>
     </modules>
 
+    <!--
     <dependencies>
-        <!-- The JUnit dependency is required for submodules by the maven-surefire-plugin <excludedGroups> configuration -->
+        The JUnit dependency is required for submodules by the maven-surefire-plugin <excludedGroups> configuration
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
+    -->
 
     <profiles>
         <!--
             Hack to make intellij behave.
             If you use intellij, enable this profile in your IDE.
             It should make life easier.
-        -->
+            -->
         <profile>
             <id>intellij</id>
             <properties>
@@ -479,6 +481,7 @@
                 </pluginManagement>
             </build>
         </profile>
+        <!--
         <profile>
             <id>externals</id>
             <activation>
@@ -499,13 +502,12 @@
                 <module>external/storm-kafka-monitor</module>
                 <module>external/storm-jms</module>
                 <module>external/storm-blobstore-migration</module>
-                <!-- <module>integration-test</module> -->
+                <module>integration-test</module> 
 
-                <!-- The following modules have dependencies on external modules. -->
                 <module>flux</module>
                 <module>sql</module>
             </modules>
-        </profile>
+        </profile>-->
         <!--<profile>
             <id>examples</id>
             <activation>
@@ -524,10 +526,88 @@
                 <module>examples/storm-perf</module>
             </modules>
         </profile>-->
+
+        <!-- *************************** -->
+        <!-- isw2-key: adequacy criteria -->
+        <!-- *************************** -->
+
+        <!-- Control-flow -->
+        <profile>
+            <id>adequacy-controlflow</id>
+            <dependencies>
+                <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <version>4.13.2</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.12</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                            <argLine>
+                                -Xmx3g 
+                                -XX:+HeapDumpOnOutOfMemoryError 
+                                ${surefire.jacoco.argLine}
+                            </argLine>
+                            <trimStackTrace>false</trimStackTrace>
+                            <forkCount>1.0C</forkCount>
+                            <reuseForks>false</reuseForks>
+                            <systemPropertyVariables>
+                                <storm.home>${project.basedir}/target/testhome</storm.home>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <propertyName>surefire.jacoco.argLine</propertyName>
+                                </configuration>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Data-flow -->
+        <profile>
+            <id>adequacy-dataflow</id>
+
+        </profile>
+        
+        <!-- Mutation -->
+        <profile>
+            <id>adequacy-mutation</id>
+            
+        </profile>
+
     </profiles>
 
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/junit/junit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.13.2</version>
+                <!-- <scope>test</scope> -->
+            </dependency>
             <dependency>
                 <groupId>org.glassfish.jersey</groupId>
                 <artifactId>jersey-bom</artifactId>
@@ -1233,7 +1313,7 @@
     <build>
         <pluginManagement>
             <plugins>
-                <plugin>
+                <!-- <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${surefire.version}</version>
@@ -1269,7 +1349,7 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
+                </plugin>-->
                 <plugin>
                     <!--To support checkstyle goals. For example: "mvn checkstyle:checkstyle"-->
                     <groupId>org.apache.maven.plugins</groupId>
