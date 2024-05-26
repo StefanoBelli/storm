@@ -168,7 +168,7 @@
     <modules>
         <module>storm-shaded-deps</module>
         <module>storm-checkstyle</module>
-        <!--<module>storm-multilang/javascript</module>-->
+        <module>storm-multilang/javascript</module>
         <module>storm-multilang/python</module>
         <module>storm-multilang/ruby</module>
         <!--<module>storm-buildtools/maven-shade-clojure-transformer</module>-->
