@@ -2,27 +2,54 @@ name: Ste's Apache Storm CI
 
 on: [push]
 
+env:
+  TESTED_SUBPROJECT: storm-client
+  BA_DUA_CLASSES: org/apache/storm/executor
+
 jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up java 21
-      uses: actions/setup-java@v2
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-    - name: Maven package (include tests)
-      run: mvn clean package
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up java 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Build, test and determine control flow coverage
+        run: mvn -P adequacy-controlflow clean test
+      - name: Generate JaCoCo report
+        run: bash ste-ci-scripts/genjacocoreports.sh
+      - name: Copy JaCoCo report
+        run: bash ste-ci-scripts/aggacreports.sh
+      - name: Build, test and determine mutation score
+        run: mvn -P adequacy-mutation clean test org.pitest:pitest-maven:mutationCoverage
+      - name: Copy PIT report
+        run: bash ste-ci-scripts/aggacreports.sh
+      - name: Build, test and determine data flow coverage
+        run: mvn -P adequacy-dataflow clean test
+      - name: Generate ba-dua report
+        run: bash ste-ci-scripts/genbaduareports.sh
+      - name: Copy ba-dua report
+        run: bash ste-ci-scripts/aggacreports.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: adequacy-reports
+          path: ac-reports/
   windows:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up java 21
-      uses: actions/setup-java@v2
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-    - name: Maven package (include tests)
-      run: mvn clean package
-
+      - uses: actions/checkout@v2
+      - name: Set up java 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Build, test and determine control flow coverage
+        run: mvn -P adequacy-controlflow clean test
+      - name: Build, test and determine data flow coverage
+        run: mvn -P adequacy-dataflow clean test
+      - name: Build, test and determine mutation score
+        run: mvn -P adequacy-mutation clean test org.pitest:pitest-maven:mutationCoverage
