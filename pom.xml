@@ -539,6 +539,7 @@
                     <groupId>junit</groupId>
                     <artifactId>junit</artifactId>
                     <version>4.13.2</version>
+                    <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.jacoco</groupId>
@@ -588,15 +589,86 @@
         <!-- Data-flow -->
         <profile>
             <id>adequacy-dataflow</id>
-
+            <dependencies>
+                <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <version>4.13.2</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                            <argLine>
+                                -javaagent:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-0.4.0-all.jar 
+                                -Xbootclasspath/a:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-0.4.0-all.jar 
+                                -Xmx3g 
+                                -XX:+HeapDumpOnOutOfMemoryError 
+                            </argLine>
+                            <trimStackTrace>false</trimStackTrace>
+                            <forkCount>1.0C</forkCount>
+                            <reuseForks>false</reuseForks>
+                            <systemPropertyVariables>
+                                <storm.home>${project.basedir}/target/testhome</storm.home>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         
         <!-- Mutation -->
         <profile>
             <id>adequacy-mutation</id>
-            
+            <dependencies>
+                <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <version>4.13.2</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                            <argLine>
+                                -Xmx3g 
+                                -XX:+HeapDumpOnOutOfMemoryError 
+                            </argLine>
+                            <trimStackTrace>false</trimStackTrace>
+                            <forkCount>1.0C</forkCount>
+                            <reuseForks>false</reuseForks>
+                            <systemPropertyVariables>
+                                <storm.home>${project.basedir}/target/testhome</storm.home>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <configuration>
+                            <targetClasses>
+                                <param>org.apache.storm.LogWriter</param>
+                            </targetClasses>
+                            <targetTests>
+                                <param>ste.ExampleTest</param>
+                            </targetTests>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
-
     </profiles>
 
     <dependencyManagement>
