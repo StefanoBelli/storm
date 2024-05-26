@@ -171,8 +171,8 @@
         <!--<module>storm-multilang/javascript</module>
         <module>storm-multilang/python</module>-->
         <module>storm-multilang/ruby</module>
-        <module>storm-buildtools/maven-shade-clojure-transformer</module>
-        <!--<module>storm-buildtools/storm-maven-plugins</module>-->
+        <!--<module>storm-buildtools/maven-shade-clojure-transformer</module>-->
+        <module>storm-buildtools/storm-maven-plugins</module>
         <module>storm-client</module>
         <!-- <module>storm-server</module> -->
         <!-- <module>storm-core</module> -->
