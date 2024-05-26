@@ -184,17 +184,6 @@
         <module>storm-submit-tools</module>
     </modules>
 
-    <!--
-    <dependencies>
-        The JUnit dependency is required for submodules by the maven-surefire-plugin <excludedGroups> configuration
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-    -->
-
     <profiles>
         <!--
             Hack to make intellij behave.
