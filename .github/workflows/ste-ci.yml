@@ -48,8 +48,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - name: Build, test and determine control flow coverage
-        run: mvn -P adequacy-controlflow clean test
+        run: mvn -P adequacy-controlflow clean package
       - name: Build, test and determine data flow coverage
-        run: mvn -P adequacy-dataflow clean test
+        run: mvn -P adequacy-dataflow clean package
       - name: Build, test and determine mutation score
-        run: mvn -P adequacy-mutation clean test org.pitest:pitest-maven:mutationCoverage
+        run: mvn -P adequacy-mutation clean package org.pitest:pitest-maven:mutationCoverage
