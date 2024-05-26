@@ -62,3 +62,5 @@ hs_err_pid*
 !/storm-server/src/test/resources/evil-path-traversal-resources.jar
 
 .vscode/
+
+coverage.ser
