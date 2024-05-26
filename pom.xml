@@ -166,7 +166,7 @@
     </properties>
 
     <modules>
-        <!--<module>storm-shaded-deps</module>-->
+        <module>storm-shaded-deps</module>
         <module>storm-checkstyle</module>
         <!-- <module>storm-multilang/javascript</module>
         <module>storm-multilang/python</module>
