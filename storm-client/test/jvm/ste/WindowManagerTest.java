@@ -1,14 +1,12 @@
 package ste;
 
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
 
-public class ExampleTest {
+public class WindowManagerTest {
     @Test
-    public void testCase() {
+    public void dummy() {
         assertEquals(1,1);
     }
 }

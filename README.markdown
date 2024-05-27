@@ -8,12 +8,9 @@ Build status below
 
 BaseDir=``./storm-client/src/jvm``
 
- * ``org.apache.storm.utils.BatchHelper``
- * ``org.apache.storm.blobstore.NimbusBlobStore``
- * ``org.apache.storm.task.ShellBolt``
- * ``org.apache.storm.bolt.JoinBolt``
  * ``org.apache.storm.utils.ObjectReader``
  * ``org.apache.storm.windowing.WindowManager``
+ * ``org.apache.storm.utils.ShellProcess``
 
 # Apache original README.markdown
 
