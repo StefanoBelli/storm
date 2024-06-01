@@ -579,8 +579,8 @@
                         <configuration>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
                             <argLine>
-                                -javaagent:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-0.4.0-all.jar 
-                                -Xbootclasspath/a:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-0.4.0-all.jar 
+                                -javaagent:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-${baduaVer}-all.jar
+                                -Xbootclasspath/a:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-${baduaVer}-all.jar
                                 -Xmx3g 
                                 -XX:+HeapDumpOnOutOfMemoryError 
                             </argLine>
