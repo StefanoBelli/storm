@@ -2,7 +2,7 @@
 
 mkdir -pv ac-reports
 
-cp ba-dua.xml ac-reports/ -v
+cp ba-dua-reports/ ac-reports/ -rv
 
 cp $TESTED_SUBPROJECT/target/pit-reports ac-reports -rv
 

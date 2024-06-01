@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BA_DUA_CLI=testdeps/ba-dua/ba-dua-cli-0.4.0-all.jar
+BA_DUA_CLI=testdeps/ba-dua/ba-dua-cli-${BADUAVER}-all.jar
 
 BA_DUA_CLASSES_PATH=$TESTED_SUBPROJECT/target/classes/
 BA_DUA_SER=$TESTED_SUBPROJECT/coverage.ser

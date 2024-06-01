@@ -4,6 +4,7 @@ on: [push]
 
 env:
   TESTED_SUBPROJECT: storm-client
+  BADUAVER: 0.4.0
 
 jobs:
   linux:
@@ -37,18 +38,3 @@ jobs:
         with:
           name: adequacy-reports
           path: ac-reports/
-  windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up java 21
-        uses: actions/setup-java@v2
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-      - name: Build, test and determine control flow coverage
-        run: mvn -P adequacy-controlflow clean package
-      - name: Build, test and determine data flow coverage
-        run: mvn -P adequacy-dataflow clean package
-      - name: Build, test and determine mutation score
-        run: mvn -P adequacy-mutation clean package org.pitest:pitest-maven:mutationCoverage
