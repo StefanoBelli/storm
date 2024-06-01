@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TESTS=$(find $TESTED_SUBPROJECT/src/test/java -iname '*.java' -type f -printf '%f\n' | sed 's/.java//g' | tr '\n' ' ')
+TESTS=$(find $TESTED_SUBPROJECT/test/jvm -iname '*.java' -type f -printf '%f\n' | sed 's/.java//g' | tr '\n' ' ')
 
 for test in $TESTS; do
   echo " * Data flow adequacy ($test)"
