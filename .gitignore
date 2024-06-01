@@ -67,3 +67,7 @@ coverage.ser
 
 !testdeps/ba-dua/ba-dua-agent-rt-0.4.0-all.jar
 !testdeps/ba-dua/ba-dua-cli-0.4.0-all.jar
+
+ba-dua-reports/
+out.xml
+ba-dua.xml
