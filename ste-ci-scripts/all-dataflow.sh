@@ -4,7 +4,7 @@ TESTS=$(find $TESTED_SUBPROJECT/test/jvm -iname '*.java' -type f -printf '%f\n' 
 
 for test in $TESTS; do
   echo " * Data flow adequacy ($test)"
-  mvn -P adequacy-dataflow clean test -Dtest=$test -DfailIfNoTests=false -DbaduaVer=$BADUAVER
+  mvn -P adequacy-dataflow clean package -Dtest=$test -DfailIfNoTests=false -DbaduaVer=$BADUAVER
   bash ste-ci-scripts/genbaduareports.sh
   mkdir -pv ba-dua-reports
   mv ba-dua.xml ba-dua-reports/$test.xml
