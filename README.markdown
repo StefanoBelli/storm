@@ -12,6 +12,14 @@ BaseDir=``./storm-client/src/jvm``
  * ``org.apache.storm.windowing.WindowManager``
  * ``org.apache.storm.utils.ShellProcess``
 
+### Ba-dua is working
+
+ * Ba-dua version: 0.4.0
+ * JDK version: 21 (OpenJDK)
+ * Maven target/source version: 8
+ * Lots of storm-\* projects got trimmed/disabled (original mvn target/source was 11)
+   - Except for storm-client which is the one being tested here
+
 # Apache original README.markdown
 
 Master Branch:  
