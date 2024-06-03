@@ -19,8 +19,8 @@ BaseDir=``./storm-client/src/jvm``
  * JRE version: 21 (OpenJDK)
  * JVM version: 21 (OpenJDK)
  * javac compiler version: 21 (OpenJDK)
- * Maven target/source version: 8
- * Lots of storm-\* projects got trimmed/disabled (original mvn target/source was 11)
+ * Maven target/source version: 8 (original maven target/source was 11)
+ * Lots of storm-\* projects got trimmed/disabled
    - Except for storm-client which is the one being tested here
 
  Change java version using ``update-alternatives`` (ubuntu/debian), ``archlinux-java`` (arch), ...
