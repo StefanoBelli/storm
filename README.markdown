@@ -8,7 +8,6 @@ Build status below
 
 BaseDir=``./storm-client/src/jvm``
 
- * ``org.apache.storm.utils.ObjectReader``
  * ``org.apache.storm.windowing.WindowManager``
  * ``org.apache.storm.utils.ShellProcess``
 
