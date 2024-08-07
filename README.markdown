@@ -6,7 +6,7 @@ Build status below
 
 ## Tested classes
 
-BaseDir=``./storm-client/src/jvm``
+BaseDir=``./storm-client/test/jvm``
 
  * ``org.apache.storm.windowing.WindowManager``
  * ``org.apache.storm.utils.ShellProcess``
