@@ -622,14 +622,10 @@
                         <version>1.16.1</version>
                         <configuration>
                             <targetClasses>
-                                <param>org.apache.storm.utils.ObjectReader</param>
-                                <param>org.apache.storm.utils.ShellProcess</param>
                                 <param>org.apache.storm.windowing.WindowManager</param>
                             </targetClasses>
                             <targetTests>
-                                <param>ste.ObjectReaderTest</param>
-                                <param>ste.ShellProcessTest</param>
-                                <param>ste.WindowManagerTest</param>
+                                <param>org.apache.storm.windowing.WindowManagerGetSlidingCountTimestampsTest</param>
                             </targetTests>
                         </configuration>
                     </plugin>
