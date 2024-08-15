@@ -1,6 +1,5 @@
 package org.apache.storm.windowing;
 
-import org.apache.storm.RefWrapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.function.ThrowingRunnable;
@@ -10,7 +9,6 @@ import org.junit.runners.Parameterized;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -80,22 +78,18 @@ public final class WindowManagerGetSlidingCountTimestampsTest extends SutWindowM
     }
 
     @Test
-    public void test() throws Throwable {
-        RefWrapper<List<Long>> timestampsThatMatchCriteria = new RefWrapper<>();
-
+    public void test() {
         long startMs = ms(startEvtNum, sumToStartEvtTimeMs);
         long endMs = ms(endEvtNum, sumToEndEvtTimeMs);
 
-        ThrowingRunnable runnable = () ->
-                timestampsThatMatchCriteria.setRef(
-                        sut.getSlidingCountTimestamps(startMs, endMs, slidingCount));
-
         if(expectsIllArgExcp) {
-            assertThrows(IllegalArgumentException.class, runnable);
+            assertThrows(IllegalArgumentException.class,
+                    () -> sut.getSlidingCountTimestamps(startMs, endMs, slidingCount));
         } else {
-            runnable.run();
+            List<Long> tssThatMatchCriteria = sut.getSlidingCountTimestamps(startMs, endMs, slidingCount);
             List<Long> expectedTss = getExpectedTssToBePresent();
-            assertEquals(expectedTss, timestampsThatMatchCriteria.getRef());
+
+            assertEquals(expectedTss, tssThatMatchCriteria);
         }
     }
 

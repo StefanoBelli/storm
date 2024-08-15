@@ -626,6 +626,7 @@
                             </targetClasses>
                             <targetTests>
                                 <param>org.apache.storm.windowing.WindowManagerGetSlidingCountTimestampsTest</param>
+                                <param>org.apache.storm.windowing.WindowManagerGetEventCountTest</param>
                             </targetTests>
                         </configuration>
                     </plugin>
