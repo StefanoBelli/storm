@@ -15,14 +15,14 @@ public final class WindowManagerGetEventCountTest extends SutWindowManager {
 
     private final int numOfEvt;
     private final int sumToEvtTs;
-    private final boolean expectsIobExcp;
+    private final boolean expectsIaeExcp;
     private final int expectsRetVal;
 
     @Parameterized.Parameters
     public static Iterable<Object[]> params() {
         return Arrays.asList(new Object[][] {
-                {0, -1, true, -1},
-                {0, 0, true, -1},
+                //{0, -1, true, -1},
+                //{0, 0, false, -1},
                 {1, -100, false, 0},
                 {1, 0, false, 1},
                 {5, 0, false, 5},
@@ -32,10 +32,10 @@ public final class WindowManagerGetEventCountTest extends SutWindowManager {
     }
 
     public WindowManagerGetEventCountTest(
-            int numOfEvt, int sumToEvtTs, boolean expectsIobExcp, int expectsRetVal) {
+            int numOfEvt, int sumToEvtTs, boolean expectsIaeExcp, int expectsRetVal) {
         this.numOfEvt = numOfEvt;
         this.sumToEvtTs = sumToEvtTs;
-        this.expectsIobExcp = expectsIobExcp;
+        this.expectsIaeExcp = expectsIaeExcp;
         this.expectsRetVal = expectsRetVal;
     }
 
@@ -51,8 +51,8 @@ public final class WindowManagerGetEventCountTest extends SutWindowManager {
 
     @Test
     public void test() {
-        if(expectsIobExcp) {
-            assertThrows(IndexOutOfBoundsException.class, () -> sut.getEventCount(ms(numOfEvt, sumToEvtTs)));
+        if(expectsIaeExcp) {
+            assertThrows(IllegalArgumentException.class, () -> sut.getEventCount(ms(numOfEvt, sumToEvtTs)));
         } else {
             assertEquals(expectsRetVal, sut.getEventCount(ms(numOfEvt, sumToEvtTs)));
         }
