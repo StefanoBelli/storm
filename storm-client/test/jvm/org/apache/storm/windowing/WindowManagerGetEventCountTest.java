@@ -22,9 +22,9 @@ public final class WindowManagerGetEventCountTest extends SutWindowManager {
     public static Iterable<Object[]> params() {
         return Arrays.asList(new Object[][] {
                 //{0, -1, true, -1},
-                //{0, 0, false, -1},
-                {1, -100, false, 0},
+                {0, 0, false, 0},
                 {1, 0, false, 1},
+                {1, -100, false, 0},
                 {5, 0, false, 5},
                 {10, 0, false, 10},
                 {10, +100, false, 10}
@@ -42,10 +42,7 @@ public final class WindowManagerGetEventCountTest extends SutWindowManager {
     @Override
     @Before
     public void setup() {
-        EvictionPolicy<Integer, ?> evp = new CountEvictionPolicy<>(Integer.MAX_VALUE);
-        TriggerPolicy<Integer, ?> trp = new CountTriggerPolicy<>(Integer.MAX_VALUE, () -> true, evp);
-        sut.setEvictionPolicy(evp);
-        sut.setTriggerPolicy(trp);
+        setSutDefaultPolicies();
         super.setup();
     }
 

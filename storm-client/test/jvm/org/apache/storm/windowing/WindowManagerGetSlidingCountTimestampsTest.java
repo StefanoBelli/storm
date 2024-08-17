@@ -2,7 +2,6 @@ package org.apache.storm.windowing;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.function.ThrowingRunnable;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -26,18 +25,24 @@ public final class WindowManagerGetSlidingCountTimestampsTest extends SutWindowM
     @Parameterized.Parameters
     public static Iterable<Object[]> params() {
         return Arrays.asList(new Object[][]{
-                /*{0, -1, 0, -1, -1, true, null},
-                {0, -1, 0, 0, -1, true, null},
-                {0, -1, 0, -2, -1, true, null},
+                /*{0, -1, 0, -1, 0, true, null},
+                {0, -1, 0, 0, 0, true, null},
+                {0, -1, 0, -2, 0, true, null},
                 {0, -1, 0, -1, 1, true, null},
                 {0, -1, 0, 0, 1, true, null},
                 {0, -1, 0, -2, 1, true, null},
-                {0, 0, 0, 0, -1, true, null},
-                {0, 0, 0, 1, -1, true, null},
-                {0, 0, 0, -1, -1, true, null},
+                {0, 0, 0, 0, 0, true, null},
+                {0, 0, 0, 1, 0, true, null},
+                {0, 0, 0, -1, 0, true, null},
                 {0, 0, 0, 0, 1, false, null},
                 {0, 0, 0, 1, 1, false, null},
-                {0, 0, 0, -1, 1, true, null},*/
+                {0, 0, 0, -1, 1, true, null},
+                {1, 0, 1, 0, 0, true, null},
+                {1, 0, 1, 1, 0, true, null},
+                {1, 0, 1, -1, 0, true, null},
+                {1, 0, 1, 0, 1, false, new int[]{1}},*/
+                {1, 0, 1, 1, 1, false, new int[]{}},
+                {1, 0, 1, -1, 1, false, new int[]{}},
                 {1, -100, 1, -50, 1, false, new int[]{}},
                 {1, -100, 1, +100, 1, false, new int[]{1}},
                 {1, 0, 3, 0, 1, false, new int[]{2,3}},
@@ -70,10 +75,7 @@ public final class WindowManagerGetSlidingCountTimestampsTest extends SutWindowM
     @Override
     @Before
     public void setup() {
-        EvictionPolicy<Integer, ?> evp = new CountEvictionPolicy<>(Integer.MAX_VALUE);
-        TriggerPolicy<Integer, ?> trp = new CountTriggerPolicy<>(Integer.MAX_VALUE, () -> true, evp);
-        sut.setEvictionPolicy(evp);
-        sut.setTriggerPolicy(trp);
+        setSutDefaultPolicies();
         super.setup();
     }
 

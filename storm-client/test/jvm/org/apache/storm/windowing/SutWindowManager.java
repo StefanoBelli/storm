@@ -41,8 +41,19 @@ public class SutWindowManager {
         }
     }
 
-    protected long ms(int numEvt, int sumMs) {
+    protected final long ms(int numEvt, int sumMs) {
+        if(numEvt == 0) {
+            return sumMs;
+        }
+
         return eventRecords.get(numEvt - 1).atMs + sumMs;
+    }
+
+    protected final void setSutDefaultPolicies() {
+        EvictionPolicy<Integer, ?> evp = new CountEvictionPolicy<>(Integer.MAX_VALUE);
+        TriggerPolicy<Integer, ?> trp = new CountTriggerPolicy<>(Integer.MAX_VALUE, () -> true, evp);
+        sut.setEvictionPolicy(evp);
+        sut.setTriggerPolicy(trp);
     }
 
     private static int rand() {
