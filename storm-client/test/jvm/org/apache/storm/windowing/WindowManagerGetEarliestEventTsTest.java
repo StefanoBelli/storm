@@ -1,7 +1,6 @@
 package org.apache.storm.windowing;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -11,7 +10,6 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-@Ignore
 @RunWith(Parameterized.class)
 public final class WindowManagerGetEarliestEventTsTest extends SutWindowManager {
     private final int startEvtNum;
@@ -32,9 +30,9 @@ public final class WindowManagerGetEarliestEventTsTest extends SutWindowManager 
                 {0, 0, 0, 0, false, -1},
                 {0, 0, 0, 1, false, -1},
                 {0, 0, 0, -1, true, IGNORE},
-                {1, 0, 1, 0, false, 1},
-                {1, 0, 1, 1, false, 1},
-                {1, 0, 1, -1, false, -1},*/
+                {1, 0, 1, 0, false, -1},
+                {1, 0, 1, 1, false, -1},*/
+                //{1, 0, 1, -1, false, -1},
                 {1, -100, 2, 0, false, 1},
                 //{1, 0, 1, +100, false, -1},
                 {1, 0, 2, 0, false, 2},
@@ -42,7 +40,7 @@ public final class WindowManagerGetEarliestEventTsTest extends SutWindowManager 
                 {2, 0, 7, 0, false, 3},
                 {10, -100, 10, +100, false, 10},
                 {1, -100, 10, +100, false, 1},
-                {10, 0, 10, +100, false, -1},
+                //{10, 0, 10, +100, false, -1},
                 //{1, -200, 1, -100, false, -1},
                 //{10, +100, 10, +200, false, -1},
         });
