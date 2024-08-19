@@ -56,7 +56,7 @@ public class SutWindowManager {
 
     protected final void setSutDefaultPolicies() {
         EvictionPolicy<Integer, ?> evp = new CountEvictionPolicy<>(Integer.MAX_VALUE);
-        TriggerPolicy<Integer, ?> trp = new CountTriggerPolicy<>(Integer.MAX_VALUE, () -> true, evp);
+        TriggerPolicy<Integer, ?> trp = new CountTriggerPolicy<>(Integer.MAX_VALUE, sut, evp);
         sut.setEvictionPolicy(evp);
         sut.setTriggerPolicy(trp);
         trp.start();
