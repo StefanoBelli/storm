@@ -1,7 +1,6 @@
 package org.apache.storm.windowing;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -11,7 +10,6 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-@Ignore
 @RunWith(Parameterized.class)
 public final class WindowManagerGetEarliestEventTsTest extends SutWindowManager {
     private final int startEvtNum;
