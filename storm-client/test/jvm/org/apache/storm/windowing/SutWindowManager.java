@@ -11,7 +11,7 @@ public class SutWindowManager {
         protected final Integer evt;
         protected final long atMs;
 
-        private EventRecord(Integer evt, long atMs) {
+        protected EventRecord(Integer evt, long atMs) {
             this.evt = evt;
             this.atMs = atMs;
         }
@@ -21,8 +21,13 @@ public class SutWindowManager {
 
     protected final List<EventRecord> eventRecords = new ArrayList<>();
 
+    protected final WindowLifecycleListener<Integer> lifecycleListener;
+
+    protected int numOfPreAdds = 10;
+
     protected SutWindowManager(WindowLifecycleListener<Integer> wll) {
-        sut = new WindowManager<>(wll);
+        lifecycleListener = wll;
+        sut = new WindowManager<>(lifecycleListener);
     }
 
     protected SutWindowManager() {
@@ -32,7 +37,7 @@ public class SutWindowManager {
     @Before
     public void setup() {
         long baseSimTimeMs = System.currentTimeMillis();
-        for(int i = 0; i < 10; ++i) {
+        for(int i = 0; i < numOfPreAdds; ++i) {
             EventRecord regEvt = new EventRecord(
                     i + rand(), baseSimTimeMs + (i * 200));
 
@@ -54,9 +59,10 @@ public class SutWindowManager {
         TriggerPolicy<Integer, ?> trp = new CountTriggerPolicy<>(Integer.MAX_VALUE, () -> true, evp);
         sut.setEvictionPolicy(evp);
         sut.setTriggerPolicy(trp);
+        trp.start();
     }
 
-    private static int rand() {
+    protected static int rand() {
         return new Random().nextInt();
     }
 }
