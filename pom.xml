@@ -625,6 +625,8 @@
                                 <param>org.apache.storm.windowing.WindowManager</param>
                             </targetClasses>
                             <targetTests>
+                                <param>org.apache.storm.windowing.WindowManagerAddTest</param>
+                                <param>org.apache.storm.windowing.WindowManagerGetEarliestEventTsTest</param>
                                 <param>org.apache.storm.windowing.WindowManagerGetSlidingCountTimestampsTest</param>
                                 <param>org.apache.storm.windowing.WindowManagerGetEventCountTest</param>
                             </targetTests>
