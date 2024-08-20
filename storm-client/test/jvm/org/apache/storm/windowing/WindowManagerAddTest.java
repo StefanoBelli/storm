@@ -82,7 +82,7 @@ public final class WindowManagerAddTest extends SutWindowManager {
             assertEquals(expectedExpiredEvts, expiredByExpiryCaptor.getValue());
             assertEquals(expectedExpiredEvts, expiredByActivationCaptor.getValue());
             assertEquals(expectedNewEvts, newEventsByActivationCaptor.getValue());
-            assertEquals(expectedNewEvts, newEventsByActivationCaptor.getValue());
+            assertEquals(expectedNewEvts, eventsByActivationCaptor.getValue());
         }
     }
 
