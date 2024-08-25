@@ -630,8 +630,7 @@
                                 <param>org.apache.storm.windowing.WindowManagerGetEarliestEventTsTest</param>
                                 <param>org.apache.storm.windowing.WindowManagerGetSlidingCountTimestampsTest</param>
                                 <param>org.apache.storm.windowing.WindowManagerGetEventCountTest</param>
-                                <param>org.apache.storm.topology.WindowedBoltExecutorTest.PrepareTest</param>
-                                <param>org.apache.storm.topology.WindowedBoltExecutorTest.ExecuteTest</param>
+                                <param>org.apache.storm.topology.WindowedBoltExecutorTest</param>
                             </targetTests>
                         </configuration>
                     </plugin>
