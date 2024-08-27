@@ -154,26 +154,6 @@ public class SutWindowedBoltExecutor {
             return conf;
         }
 
-        /*
-        public static Map<String,Object> validSlidIntvlCount() {
-            Map<String, Object> conf = new HashMap<>();
-
-            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_COUNT, 10);
-            conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 11);
-
-            return conf;
-        }
-
-        public static Map<String,Object> invalidSlidIntvlCount() {
-            Map<String, Object> conf = new HashMap<>();
-
-            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_COUNT, 10);
-            conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 9);
-
-            return conf;
-        }
-         */
-
         public static Map<String,Object> validWinLenDuration() {
             Map<String, Object> conf = new HashMap<>();
 
@@ -190,26 +170,6 @@ public class SutWindowedBoltExecutor {
 
             return conf;
         }
-
-        /*
-        public static Map<String,Object> validSlidIntvlDuration() {
-            Map<String, Object> conf = new HashMap<>();
-
-            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_DURATION_MS, 500);
-            conf.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 1);
-
-            return conf;
-        }
-
-        public static Map<String,Object> invalidSlidIntvlDuration() {
-            Map<String, Object> conf = new HashMap<>();
-
-            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_DURATION_MS, 1500);
-            conf.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 1);
-
-            return conf;
-        }
-         */
 
         public static Map<String,Object> validBothWinLenAndSlidIntvlDuration() {
             Map<String, Object> conf = new HashMap<>();
