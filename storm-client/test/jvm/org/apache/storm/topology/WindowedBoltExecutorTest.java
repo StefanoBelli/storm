@@ -30,21 +30,33 @@ public final class WindowedBoltExecutorTest {
         public static Iterable<Object[]> params() {
             return Arrays.asList(new Object[][] {
                     { null, null, null, RuntimeException.class },
-                    { null, null, makeOutputCollector(), RuntimeException.class },
+                    { null, null, validOutputCollector(), RuntimeException.class },
+                    { null, null, invalidOutputCollector(), RuntimeException.class },
                     { null, makeTopologyContext(), null, RuntimeException.class },
-                    { null, makeTopologyContext(), makeOutputCollector(), RuntimeException.class },
+                    { null, makeTopologyContext(), validOutputCollector(), RuntimeException.class },
+                    { null, makeTopologyContext(), invalidOutputCollector(), RuntimeException.class },
+                    //{ null, invalidTopologyContext(), null, RuntimeException.class },
+                    //{ null, invalidTopologyContext(), validOutputCollector(), RuntimeException.class },
+                    //{ null, invalidTopologyContext(), invalidOutputCollector(), RuntimeException.class },
                     { invalidConfig(), null, null, RuntimeException.class },
-                    { invalidConfig(), null, makeOutputCollector(), RuntimeException.class },
+                    { invalidConfig(), null, validOutputCollector(), RuntimeException.class },
+                    { invalidConfig(), null, invalidOutputCollector(), RuntimeException.class },
                     { invalidConfig(), makeTopologyContext(), null, RuntimeException.class },
-                    { invalidConfig(), makeTopologyContext(), makeOutputCollector(), IllegalArgumentException.class },
-                    { invalidConfig(), null, null, RuntimeException.class },
-                    { invalidConfig(), null, makeOutputCollector(), RuntimeException.class },
-                    { invalidConfig(), makeTopologyContext(), null, RuntimeException.class },
-                    { invalidConfig(), makeTopologyContext(), makeOutputCollector(), IllegalArgumentException.class },
+                    { invalidConfig(), makeTopologyContext(), validOutputCollector(), IllegalArgumentException.class },
+                    { invalidConfig(), makeTopologyContext(), invalidOutputCollector(), IllegalArgumentException.class },
+                    //{ invalidConfig(), invalidTopologyContext(), null, RuntimeException.class },
+                    //{ invalidConfig(), invalidTopologyContext(), validOutputCollector(), IllegalArgumentException.class },
+                    //{ invalidConfig(), invalidTopologyContext(), invalidTopologyContext(), IllegalArgumentException.class },
                     { validConfig(), null, null, RuntimeException.class },
-                    { validConfig(), null, makeOutputCollector(), RuntimeException.class },
+                    { validConfig(), null, validOutputCollector(), RuntimeException.class },
+                    { validConfig(), null, invalidOutputCollector(), RuntimeException.class },
                     { validConfig(), makeTopologyContext(), null, RuntimeException.class },
-                    { validConfig(), makeTopologyContext(), makeOutputCollector(), null },
+                    { validConfig(), makeTopologyContext(), validOutputCollector(), null },
+                    //{ validConfig(), makeTopologyContext(), invalidOutputCollector(), IllegalArgumentException.class },
+
+                    //{ validConfig(), invalidTopologyContext(), null, RuntimeException.class },
+                    //{ validConfig(), invalidTopologyContext(), validOutputCollector(), IllegalArgumentException.class },
+                    //{ validConfig(), invalidTopologyContext(), invalidOutputCollector(), IllegalArgumentException.class}
             });
         }
 

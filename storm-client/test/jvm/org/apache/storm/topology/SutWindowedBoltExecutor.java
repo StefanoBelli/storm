@@ -1,6 +1,7 @@
 package org.apache.storm.topology;
 
 import org.apache.storm.task.GeneralTopologyContext;
+import org.apache.storm.task.IOutputCollector;
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.base.BaseWindowedBolt;
@@ -12,10 +13,7 @@ import org.apache.storm.windowing.TupleWindow;
 import org.apache.storm.Config;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SutWindowedBoltExecutor {
     protected final BaseWindowedBolt bolt;
@@ -53,6 +51,14 @@ public class SutWindowedBoltExecutor {
     /*
      * TopologyContext
      */
+    protected static TopologyContext invalidTopologyContext() {
+        return new TopologyContext(null,null,null,
+                null,null,null,
+                null,null,null,null,null,null,
+                null,null,null,null,
+                null,null);
+    }
+
     protected static TopologyContext makeTopologyContext() {
         return Mockito.mock();
     }
@@ -62,6 +68,49 @@ public class SutWindowedBoltExecutor {
      */
     protected static OutputCollector makeOutputCollector() {
         return Mockito.mock();
+    }
+
+    protected static OutputCollector validOutputCollector() {
+        return new OutputCollector(new IOutputCollector() {
+            @Override
+            public List<Integer> emit(String streamId, Collection<Tuple> anchors, List<Object> tuple) {
+                return new ArrayList<>();
+            }
+
+            @Override
+            public void emitDirect(int taskId, String streamId, Collection<Tuple> anchors, List<Object> tuple) {
+
+            }
+
+            @Override
+            public void ack(Tuple input) {
+
+            }
+
+            @Override
+            public void fail(Tuple input) {
+
+            }
+
+            @Override
+            public void resetTimeout(Tuple input) {
+
+            }
+
+            @Override
+            public void flush() {
+
+            }
+
+            @Override
+            public void reportError(Throwable error) {
+
+            }
+        });
+    }
+
+    protected static OutputCollector invalidOutputCollector() {
+        return new OutputCollector(null);
     }
 
     /*
