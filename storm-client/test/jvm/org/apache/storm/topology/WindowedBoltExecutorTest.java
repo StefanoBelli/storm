@@ -53,10 +53,15 @@ public final class WindowedBoltExecutorTest {
                     { validConfig(), makeTopologyContext(), null, RuntimeException.class },
                     { validConfig(), makeTopologyContext(), validOutputCollector(), null },
                     //{ validConfig(), makeTopologyContext(), invalidOutputCollector(), IllegalArgumentException.class },
-
                     //{ validConfig(), invalidTopologyContext(), null, RuntimeException.class },
                     //{ validConfig(), invalidTopologyContext(), validOutputCollector(), IllegalArgumentException.class },
-                    //{ validConfig(), invalidTopologyContext(), invalidOutputCollector(), IllegalArgumentException.class}
+                    //{ validConfig(), invalidTopologyContext(), invalidOutputCollector(), IllegalArgumentException.class},
+                    { TopoConfs.validWinLenCount(), makeTopologyContext(), validOutputCollector(), null },
+                    { TopoConfs.invalidWinLenCount(), makeTopologyContext(), validOutputCollector(), IllegalArgumentException.class },
+                    { TopoConfs.validWinLenDuration(), makeTopologyContext(), validOutputCollector(), null },
+                    { TopoConfs.invalidWinLenDuration(), makeTopologyContext(), validOutputCollector(), IllegalArgumentException.class },
+                    { TopoConfs.validBothWinLenAndSlidIntvlDuration(), makeTopologyContext(), validOutputCollector(), null },
+                    { TopoConfs.invalidBothWinLenAndSlidIntvlDuration(), makeTopologyContext(), validOutputCollector(), IllegalArgumentException.class },
             });
         }
 

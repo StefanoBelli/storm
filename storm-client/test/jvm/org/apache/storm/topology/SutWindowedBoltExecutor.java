@@ -134,4 +134,101 @@ public class SutWindowedBoltExecutor {
             }
         };
     }
+
+    protected static class TopoConfs {
+        public static Map<String,Object> validWinLenCount() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_WINDOW_LENGTH_COUNT, 10);
+            conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 11);
+
+            return conf;
+        }
+
+        public static Map<String,Object> invalidWinLenCount() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_WINDOW_LENGTH_COUNT, 10);
+            conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 9);
+
+            return conf;
+        }
+
+        /*
+        public static Map<String,Object> validSlidIntvlCount() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_COUNT, 10);
+            conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 11);
+
+            return conf;
+        }
+
+        public static Map<String,Object> invalidSlidIntvlCount() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_COUNT, 10);
+            conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 9);
+
+            return conf;
+        }
+         */
+
+        public static Map<String,Object> validWinLenDuration() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_WINDOW_LENGTH_DURATION_MS, 900);
+            conf.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 1);
+
+            return conf;
+        }
+
+        public static Map<String,Object> invalidWinLenDuration() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_WINDOW_LENGTH_DURATION_MS, 1500);
+
+            return conf;
+        }
+
+        /*
+        public static Map<String,Object> validSlidIntvlDuration() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_DURATION_MS, 500);
+            conf.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 1);
+
+            return conf;
+        }
+
+        public static Map<String,Object> invalidSlidIntvlDuration() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_DURATION_MS, 1500);
+            conf.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 1);
+
+            return conf;
+        }
+         */
+
+        public static Map<String,Object> validBothWinLenAndSlidIntvlDuration() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_WINDOW_LENGTH_DURATION_MS, 1000);
+            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_DURATION_MS, 1500);
+            conf.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 3);
+
+            return conf;
+        }
+
+        public static Map<String,Object> invalidBothWinLenAndSlidIntvlDuration() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_WINDOW_LENGTH_DURATION_MS, 1000);
+            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_DURATION_MS, 1500);
+            conf.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 2);
+
+            return conf;
+        }
+    }
 }
