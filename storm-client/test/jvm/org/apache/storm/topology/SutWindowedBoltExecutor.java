@@ -190,5 +190,15 @@ public class SutWindowedBoltExecutor {
 
             return conf;
         }
+
+        public static Map<String,Object> invalidBothWinLenAndSlidIntvlCount() {
+            Map<String, Object> conf = new HashMap<>();
+
+            conf.put(Config.TOPOLOGY_BOLTS_WINDOW_LENGTH_COUNT, 10);
+            conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_COUNT, 15);
+            conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 20);
+
+            return conf;
+        }
     }
 }
