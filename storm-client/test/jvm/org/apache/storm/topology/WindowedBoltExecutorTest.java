@@ -13,10 +13,7 @@ import org.junit.runners.Parameterized;
 import org.mockito.Mockito;
 import org.mockito.verification.VerificationMode;
 
-import java.util.Map;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -78,6 +75,7 @@ public final class WindowedBoltExecutorTest {
             this.topologyContext = topologyContext;
             this.outputCollector = outputCollector;
             this.expectedException = expectedException;
+            buildWindowedBoltExecutor();
         }
 
         @Test
@@ -104,29 +102,44 @@ public final class WindowedBoltExecutorTest {
         @Parameterized.Parameters
         public static Iterable<Object[]> params() {
             return Arrays.asList(new Object[][] {
-                    //{ null, null, arrayOfArray(), RuntimeException.class },
-                    { null, makeTuple(123), arrayOfArray(), null },
-                    { arrayOf(makeTuple(123)), makeTuple(456), arrayOfArray(), null },
-                    { arrayOf(makeTuple(123), makeTuple(456)), makeTuple(789), arrayOfArray(), null },
+                    //{ null, null, arrayOfArray(), RuntimeException.class, false },
+                    { null, makeTuple(123), arrayOfArray(), null, false },
+                    { arrayOf(makeTuple(123)), makeTuple(456), arrayOfArray(), null, false },
+                    { arrayOf(makeTuple(123), makeTuple(456)), makeTuple(789), arrayOfArray(), null, false },
                     { arrayOf(makeTuple(123), makeTuple(456), makeTuple(789)),
-                            makeTuple(912), arrayOfArray(arrayOf(123, 456, 789, 912)), null},
+                            makeTuple(912), arrayOfArray(arrayOf(123, 456, 789, 912)), null, false },
                     { arrayOf(makeTuple(123), makeTuple(456), makeTuple(789), makeTuple(912)),
-                            makeTuple(345), arrayOfArray(arrayOf(123, 456, 789, 912)), null},
+                            makeTuple(345), arrayOfArray(arrayOf(123, 456, 789, 912)), null, false },
                     { arrayOf(makeTuple(123), makeTuple(456), makeTuple(789), makeTuple(912),
                             makeTuple(345)),
-                            makeTuple(678), arrayOfArray(arrayOf(123, 456, 789, 912)), null},
+                            makeTuple(678), arrayOfArray(arrayOf(123, 456, 789, 912)), null, false },
                     { arrayOf(makeTuple(123), makeTuple(456), makeTuple(789), makeTuple(912),
                             makeTuple(345), makeTuple(678)),
-                            makeTuple(891), arrayOfArray(arrayOf(123, 456, 789, 912)), null},
+                            makeTuple(891), arrayOfArray(arrayOf(123, 456, 789, 912)), null, false },
                     { arrayOf(makeTuple(123), makeTuple(456), makeTuple(789), makeTuple(912),
                             makeTuple(345), makeTuple(678), makeTuple(891)),
                             makeTuple(234),
-                            arrayOfArray(arrayOf(123, 456, 789, 912), arrayOf(345,678,891,234)), null},
+                            arrayOfArray(arrayOf(123, 456, 789, 912), arrayOf(345,678,891,234)), null, false },
                     { arrayOf(makeTuple(123), makeTuple(456), makeTuple(789), makeTuple(912),
                             makeTuple(345), makeTuple(678), makeTuple(891), makeTuple(234),
                             makeTuple(567), makeTuple(891), makeTuple(235)),
                             makeTuple(678),
-                            arrayOfArray(arrayOf(123, 456, 789, 912), arrayOf(345,678,891,234), arrayOf(567,891,235,678)), null},
+                            arrayOfArray(arrayOf(123, 456, 789, 912),
+                                    arrayOf(345,678,891,234), arrayOf(567,891,235,678)), null, false },
+                    { null, makeTuple(1499), arrayOfArray(), null, true },
+                    { arrayOf(makeTuple(10), makeTuple(20), makeTuple(500), makeTuple(700),
+                            makeTuple(1400)), makeTuple(1499), arrayOfArray(), null, true },
+                    { arrayOf(makeTuple(10), makeTuple(20), makeTuple(500), makeTuple(700),
+                            makeTuple(999), makeTuple(1499)), makeTuple(1500),
+                            arrayOfArray(arrayOf(10,20,500,700,999,1499,1500)), null, true },
+                    { arrayOf(makeTuple(10), makeTuple(20), makeTuple(500), makeTuple(700),
+                            makeTuple(999), makeTuple(1500), makeTuple(1560),
+                            makeTuple(1700)), makeTuple(3100),
+                            arrayOfArray(arrayOf(10,20,500,700,999,1500), arrayOf(1560, 1700)), null, true },
+                    { arrayOf(makeTuple(10), makeTuple(20), makeTuple(500), makeTuple(700),
+                            makeTuple(999), makeTuple(1500), makeTuple(1560),
+                            makeTuple(1700)), makeTuple(3000),
+                            arrayOfArray(arrayOf(10,20,500,700,999,1500), arrayOf(1560, 1700, 3000)), null, true },
             });
         }
 
@@ -134,24 +147,37 @@ public final class WindowedBoltExecutorTest {
         private final Class<Throwable> expectedException;
         private final Tuple[] preExecuteTuples;
         private final Tuple argTuple;
+        private final boolean hasTimestamps;
+        private final Map<String,Object> conf;
 
         public ExecuteTest(Tuple[] preExecuteTuples, Tuple argTuple,
                 long[][] expectedOrderedWindowsOfTuplesUid,
-                Class<Throwable> expectedException) {
-
+                Class<Throwable> expectedException, boolean hasTimestamps) {
             this.preExecuteTuples = preExecuteTuples;
             this.argTuple = argTuple;
             this.expectedOrderedWindowsOfTuplesUid = expectedOrderedWindowsOfTuplesUid;
             this.expectedException = expectedException;
+            this.hasTimestamps = hasTimestamps;
+
+            if(hasTimestamps) {
+                Mockito
+                        .when(bolt.getTimestampExtractor())
+                        .thenReturn(TupleFieldTimestampExtractor.of(TUPLE_FIELD));
+
+                conf = TopoConfs.validBothWinLenAndSlidIntvlDuration();
+            } else {
+                conf = validConfig();
+            }
+
+            buildWindowedBoltExecutor();
         }
 
         @Before
         public void setup() {
-            Map<String, Object> config = validConfig();
             TopologyContext topologyContext = makeTopologyContext();
             OutputCollector outputCollector = makeOutputCollector();
 
-            sut.prepare(config, topologyContext, outputCollector);
+            sut.prepare(conf, topologyContext, outputCollector);
 
             if(preExecuteTuples != null) {
                 for(final Tuple tuple : preExecuteTuples) {
@@ -161,7 +187,7 @@ public final class WindowedBoltExecutorTest {
 
             Mockito
                     .verify(bolt, Mockito.times(1))
-                    .prepare(Mockito.eq(config), Mockito.eq(topologyContext), Mockito.any(OutputCollector.class));
+                    .prepare(Mockito.eq(conf), Mockito.eq(topologyContext), Mockito.any(OutputCollector.class));
         }
 
         @Test
@@ -172,6 +198,10 @@ public final class WindowedBoltExecutorTest {
                 runnable.run();
             } else {
                 assertThrows(expectedException, runnable);
+            }
+
+            if(hasTimestamps) {
+                sut.waterMarkEventGenerator.run();
             }
 
             assertEquals(expectedOrderedWindowsOfTuplesUid.length, boltReceivedTupleWindows.size());
@@ -208,4 +238,33 @@ public final class WindowedBoltExecutorTest {
             return l;
         }
     }
+
+    /*
+    public static final class ExecuteWithTimestampTest extends SutWindowedBoltExecutor {
+
+        public ExecuteWithTimestampTest() {
+            super(true);
+        }
+
+        @Test
+        public void testExecuteTuplesWithTimestamp() {
+            sut.prepare(
+                    TopoConfs.validBothWinLenAndSlidIntvlDuration(),
+                    makeTopologyContext(),
+                    makeOutputCollector());
+
+            long[] tss = { 10, 20, 500, 700, 999, 1500, 1560, 1700 };
+            for(final long ts : tss) {
+                sut.execute(makeTuple(ts));
+            }
+
+            sut.execute(makeTuple(3000));
+
+            sut.waterMarkEventGenerator.run();
+
+            long[][] expectedWindows = { { 10, 20, 500, 700, 999, 1500 }, { 1560, 1700, 3000 } };
+
+        }
+    }
+     */
 }

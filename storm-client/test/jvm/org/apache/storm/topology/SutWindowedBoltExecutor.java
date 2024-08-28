@@ -17,10 +17,10 @@ import java.util.*;
 
 public class SutWindowedBoltExecutor {
     protected final BaseWindowedBolt bolt;
-    protected final WindowedBoltExecutor sut;
+    protected WindowedBoltExecutor sut;
     protected final List<TupleWindow> boltReceivedTupleWindows;
 
-    private static final String TUPLE_FIELD = "uniqueId";
+    protected static final String TUPLE_FIELD = "uniqueId";
 
     protected SutWindowedBoltExecutor() {
         boltReceivedTupleWindows = new ArrayList<>();
@@ -29,6 +29,9 @@ public class SutWindowedBoltExecutor {
                 .doAnswer(args ->
                         boltReceivedTupleWindows.add(args.getArgument(0)))
                 .when(bolt).execute(Mockito.any(TupleWindow.class));
+    }
+
+    protected void buildWindowedBoltExecutor() {
         sut = new WindowedBoltExecutor(bolt);
     }
 
@@ -174,9 +177,9 @@ public class SutWindowedBoltExecutor {
         public static Map<String,Object> validBothWinLenAndSlidIntvlDuration() {
             Map<String, Object> conf = new HashMap<>();
 
-            conf.put(Config.TOPOLOGY_BOLTS_WINDOW_LENGTH_DURATION_MS, 1000);
+            conf.put(Config.TOPOLOGY_BOLTS_WINDOW_LENGTH_DURATION_MS, 1500);
             conf.put(Config.TOPOLOGY_BOLTS_SLIDING_INTERVAL_DURATION_MS, 1500);
-            conf.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 3);
+            conf.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 4);
 
             return conf;
         }
