@@ -238,33 +238,4 @@ public final class WindowedBoltExecutorTest {
             return l;
         }
     }
-
-    /*
-    public static final class ExecuteWithTimestampTest extends SutWindowedBoltExecutor {
-
-        public ExecuteWithTimestampTest() {
-            super(true);
-        }
-
-        @Test
-        public void testExecuteTuplesWithTimestamp() {
-            sut.prepare(
-                    TopoConfs.validBothWinLenAndSlidIntvlDuration(),
-                    makeTopologyContext(),
-                    makeOutputCollector());
-
-            long[] tss = { 10, 20, 500, 700, 999, 1500, 1560, 1700 };
-            for(final long ts : tss) {
-                sut.execute(makeTuple(ts));
-            }
-
-            sut.execute(makeTuple(3000));
-
-            sut.waterMarkEventGenerator.run();
-
-            long[][] expectedWindows = { { 10, 20, 500, 700, 999, 1500 }, { 1560, 1700, 3000 } };
-
-        }
-    }
-     */
 }
